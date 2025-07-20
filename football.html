@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Football Bonus Game</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background-color: #e0f7fa;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    #football-game {
+      margin-top: 100px;
+    }
+
+    #game-area {
+      position: relative;
+      width: 600px;
+      height: 200px;
+      margin: 0 auto;
+      border: 3px solid #444;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    #target {
+      position: absolute;
+      top: 80px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: red;
+      animation: moveTarget 1s linear infinite;
+    }
+
+    #football {
+      margin-top: 30px;
+    }
+
+    @keyframes moveTarget {
+      0% { left: 0; }
+      50% { left: 560px; }
+      100% { left: 0; }
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div id="football-game">
+    <h1>🏈 Bonus Challenge!</h1>
+    <p>Click "Throw" when the target is in the center to score!</p>
+
+    <div id="game-area">
+      <div id="target"></div>
+    </div>
+
+    <button id="throw-btn">Throw!</button>
+
+    <p id="result-msg"></p>
+  </div>
+
+  <script>
+    const target = document.getElementById("target");
+    const throwBtn = document.getElementById("throw-btn");
+    const resultMsg = document.getElementById("result-msg");
+
+    function getTargetPosition() {
+      const targetRect = target.getBoundingClientRect();
+      const gameAreaRect = document.getElementById("game-area").getBoundingClientRect();
+      return targetRect.left - gameAreaRect.left + targetRect.width / 2;
+    }
+
+    function handleThrow() {
+      const pos = getTargetPosition();
+
+      // Center range: 270 to 330 (adjust as needed for fairness)
+      if (pos > 270 && pos < 330) {
+        resultMsg.textContent = "🎯 Nice throw! You made it!";
+        setTimeout(() => {
+          window.location.href = "certificate.html";
+        }, 1500);
+      } else {
+        resultMsg.textContent = "😓 Missed! Restarting the whole game...";
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
+      }
+    }
+
+    throwBtn.addEventListener("click", handleThrow);
+  </script>
+</body>
+</html>
