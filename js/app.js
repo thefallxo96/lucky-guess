@@ -30,7 +30,40 @@ let gameOver = false;
 
 
 /*-------------- Functions -------------*/
-
+ initializeGame = () => {
+  currentGuess = '';
+  previousGuesses = [];
+  gameOver = false;
+  render();
+}; 
+render = () => {
+  // update the UI based on the current state
+  const guessInput = document.getElementById('guessInput');
+  const previousGuessesList = document.getElementById('previousGuesses');
+  const message = document.getElementById('message'); 
+  guessInput.value = currentGuess;
+  previousGuessesList.innerHTML = previousGuesses.map(guess => `<li>${guess
+}</li>`).join('');
+  if (gameOver) {
+    message.textContent = 'Game Over! Please refresh to play again.';
+  } else {
+    message.textContent = 'Make your guess!';
+  }
+};
+checkGuess = () => {
+  const guessInput = document.getElementById('guessInput');
+  const guess = guessInput.value.trim();
+  if (guess === '') {
+    alert('Please enter a valid guess.');
+    return;
+  }
+  currentGuess = guess;
+  previousGuesses.push(currentGuess);
+  if (previousGuesses.length >= MAX_GUESSES) {
+    gameOver = true;
+  }
+  render();
+};
 
 /*----------- Event Listeners ----------*/
 
