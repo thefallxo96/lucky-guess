@@ -1,69 +1,104 @@
 /*-------------- Constants -------------*/
-// define any constants here that will be used throughout the app
-// make questions random, set a maximum number of guesses, etc.
-'use strict';
-const QUESTIONS = [
-  "What is the capital of France?",
-  "What is 2 + 2?",
-  "What is the largest planet in our solar system?",
-  "What is the boiling point of water?",
-  "What is the chemical symbol for gold?",
-  "What is the square root of 16?",
-  "What is the currency of Japan?",
-  "What is the main ingredient in guacamole?",
-  "What is the longest river in the world?",
-  "What is the hardest natural substance on Earth?",
-  "What is the capital of Puerto Rico?",
-  "What is the capital of Australia?",
-];
-const MAX_GUESSES = 5;
-const MIN_GUESSES = 1;
 
+const MAX_ROUNDS = 5;
+const TOTAL_QUESTIONS = 6;
 
 /*---------- Variables (state) ---------*/
-let currentGuess = '';
-let previousGuesses = [];
-let gameOver = false;
 
+let round = 1;
+let lives = 3;
+let questions = [];
+let playerName = '';
 
 /*----- Cached Element References  -----*/
 
+// Screens
+const nameScreen = document.getElementById("name-screen");
+const gameContainer = document.getElementById("game-container");
+
+// Name input/display
+const nameInput = document.getElementById("player-name");
+const displayName = document.getElementById("display-name");
+
+// Question-related elements
+const questionEl = document.getElementById("question-text");
+const roundEl = document.getElementById("round-number");
+const livesEl = document.getElementById("lives-count");
+const answerInput = document.getElementById("answer-input");
+const submitBtn = document.getElementById("submit-answer");
+const startBtn = document.getElementById("start-game");
 
 /*-------------- Functions -------------*/
- initializeGame = () => {
-  currentGuess = '';
-  previousGuesses = [];
-  gameOver = false;
-  render();
-}; 
-render = () => {
-  // update the UI based on the current state
-  const guessInput = document.getElementById('guessInput');
-  const previousGuessesList = document.getElementById('previousGuesses');
-  const message = document.getElementById('message'); 
-  guessInput.value = currentGuess;
-  previousGuessesList.innerHTML = previousGuesses.map(guess => `<li>${guess
-}</li>`).join('');
-  if (gameOver) {
-    message.textContent = 'Game Over! Please refresh to play again.';
-  } else {
-    message.textContent = 'Make your guess!';
-  }
-};
-checkGuess = () => {
-  const guessInput = document.getElementById('guessInput');
-  const guess = guessInput.value.trim();
-  if (guess === '') {
-    alert('Please enter a valid guess.');
+
+function getRandomQuestions(count) {
+  const questionBank = [
+    { question: "What is 5 + 3?", answer: "8" },
+    { question: "What is the capital of France?", answer: "paris" },
+    { question: "What is the capital of Puerto Rico?", answer: "san juan" },
+    { question: "Who wrote 'Hamlet'?", answer: "shakespeare" },
+    { question: "How many legs does a spider have?", answer: "8" },
+    { question: "Is fire hot or cold?", answer: "hot" } // Bonus question
+  ];
+
+  const shuffled = questionBank.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
+function startGame() {
+  const name = nameInput.value.trim();
+  if (name === "") {
+    alert("Please enter your name.");
     return;
   }
-  currentGuess = guess;
-  previousGuesses.push(currentGuess);
-  if (previousGuesses.length >= MAX_GUESSES) {
-    gameOver = true;
+
+  playerName = name;
+  localStorage.setItem("playerName", playerName);
+  displayName.textContent = playerName;
+
+  questions = getRandomQuestions(TOTAL_QUESTIONS);
+
+  nameScreen.style.display = "none";
+  gameContainer.style.display = "block";
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const currentQuestion = questions[round - 1];
+  questionEl.textContent = currentQuestion.question;
+  roundEl.textContent = round;
+  answerInput.value = "";
+  answerInput.focus();
+}
+
+function checkAnswer() {
+  const playerAnswer = answerInput.value.trim().toLowerCase();
+  const correctAnswer = questions[round - 1].answer.toLowerCase();
+
+  if (playerAnswer === correctAnswer) {
+    round++;
+
+    if (round <= MAX_ROUNDS) {
+      loadQuestion();
+    } else {
+      // Advance to bonus football game
+      window.location.href = "football.html";
+    }
+  } else {
+    lives--;
+    livesEl.textContent = lives;
+
+    if (lives === 0) {
+      alert("No lives left! Restarting game...");
+      window.location.reload();
+    }
   }
-  render();
-};
+}
 
 /*----------- Event Listeners ----------*/
 
+startBtn.addEventListener("click", startGame);
+submitBtn.addEventListener("click", checkAnswer);
+answerInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") checkAnswer();
+});
