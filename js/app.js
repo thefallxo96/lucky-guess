@@ -29,7 +29,7 @@ function getRandomQuestions(count) {
     { question: "What is the capital of Puerto Rico?", answer: "san juan" },
     { question: "Who wrote 'Hamlet'?", answer: "shakespeare" },
     { question: "How many legs does a spider have?", answer: "8" },
-    { question: "Is fire hot or cold?", answer: "hot" }
+    { question: "Who won the 2025 NBA Championships?", answer: "Oklahoma City Thunder" }
   ];
   //toSorted was used to randomize the order of questions
   return questionBank.toSorted(() => 0.5 - Math.random()).slice(0, count);
