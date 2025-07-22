@@ -24,8 +24,8 @@ const startBtn = document.getElementById("start-game");
 
 function getRandomQuestions(count) {
   const questionBank = [
-    { question: "What is 5 + 3?", answer: "8" },
-    { question: "What is the capital of France?", answer: "paris" },
+    { question: "What is the capital of New York?", answer: "albany" },
+    { question: "What is the name of Bad Bunny's Newest Album?", answer: "Debi Tirar Mas Fotos" },
     { question: "What is the capital of Puerto Rico?", answer: "san juan" },
     { question: "Who wrote 'Hamlet'?", answer: "shakespeare" },
     { question: "How many legs does a spider have?", answer: "8" },
