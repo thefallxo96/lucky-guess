@@ -1,3 +1,4 @@
+console.log("✅ app.js loaded");
 
 const MAX_ROUNDS = 5;
 const TOTAL_QUESTIONS = 6;
@@ -23,9 +24,9 @@ const startBtn = document.getElementById("start-game");
 
 function getRandomQuestions(count) {
   const questionBank = [
-    { question: "What is the capital of New York?", answer: "albany" },
+    { question: "What is the capital of New York?", answer: "Albany" },
     { question: "What is the name of Bad Bunny's Newest Album?", answer: "Debi Tirar Mas Fotos" },
-    { question: "What is the capital of Puerto Rico?", answer: "san juan" },
+    { question: "What is the capital of Puerto Rico?", answer: "San Juan" },
     { question: "Who wrote 'Hamlet'?", answer: "William Shakespeare" },
     { question: "How many legs does a spider have?", answer: "8" },
     { question: "Who won the 2025 NBA Championships?", answer: "Knicks" }
