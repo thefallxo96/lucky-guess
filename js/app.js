@@ -27,9 +27,9 @@ function getRandomQuestions(count) {
     { question: "What is the capital of New York?", answer: "albany" },
     { question: "What is the name of Bad Bunny's Newest Album?", answer: "Debi Tirar Mas Fotos" },
     { question: "What is the capital of Puerto Rico?", answer: "san juan" },
-    { question: "Who wrote 'Hamlet'?", answer: "shakespeare" },
+    { question: "Who wrote 'Hamlet'?", answer: "William Shakespeare" },
     { question: "How many legs does a spider have?", answer: "8" },
-    { question: "Who won the 2025 NBA Championships?", answer: "Oklahoma City Thunder" }
+    { question: "Who won the 2025 NBA Championships?", answer: "Knicks" }
   ];
   //toSorted was used to randomize the order of questions
   return questionBank.toSorted(() => 0.5 - Math.random()).slice(0, count);
