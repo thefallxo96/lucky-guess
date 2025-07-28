@@ -1,4 +1,3 @@
-console.log("✅ app.js loaded");
 
 const MAX_ROUNDS = 5;
 const TOTAL_QUESTIONS = 6;

@@ -169,7 +169,7 @@ function startGame() {
         footballX > canvas.width ||
         footballY > canvas.height
       ) {
-        alert("❌ Missed! Try again.");
+        alert("AAHHH HAAA YOU MISSED !! Try again...MAYBE !");
         window.location.href = "index.html";
         return;
       }
