@@ -67,3 +67,45 @@ input, button {
     padding: 0 1rem;
   }
 }
+
+#ufo {
+  position: fixed;
+  top: 10%;
+  left: -150px;
+  width: 100px;
+  z-index: 5;
+  animation: flyUfo 15s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes flyUfo {
+  0% {
+    left: -150px;
+    transform: rotate(0deg);
+  }
+  100% {
+    left: 110%;
+    transform: rotate(5deg);
+  }
+}
+#alien {
+  position: fixed;
+  bottom: -20px;
+  right: -60px;
+  width: 80px;
+  z-index: 5;
+  animation: peekAlien 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes peekAlien {
+  0%, 100% {
+    transform: translateY(100%) rotateY(180deg);
+    opacity: 0;
+  }
+  10%, 90% {
+    transform: translateY(0) rotateY(180deg);
+    opacity: 1;
+  }
+}
+
