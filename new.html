@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Audio Mute Toggle Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+    button {
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Audio Mute Toggle Test</h1>
+
+  <!-- Background Music -->
+  <audio id="bg-music" src="audio/background-music.mp3" loop preload="auto"></audio>
+
+  <!-- Toggle Button -->
+  <button id="toggle-music">🔊 Music</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const bgMusic = document.getElementById("bg-music");
+      const toggleMusicBtn = document.getElementById("toggle-music");
+
+      if (!bgMusic) {
+        console.error("Audio element #bg-music not found");
+        return;
+      }
+      if (!toggleMusicBtn) {
+        console.error("Button #toggle-music not found");
+        return;
+      }
+
+      // Try autoplay on page load
+      bgMusic.volume = 0.3;
+      bgMusic.play()
+        .then(() => console.log("Background music autoplayed"))
+        .catch((e) => {
+          console.warn("Autoplay blocked; will play on user interaction", e);
+          // Try again on first user click
+          window.addEventListener("click", () => {
+            bgMusic.play().then(() => console.log("Background music started on click"));
+          }, { once: true });
+        });
+
+      // Mute toggle handler
+      toggleMusicBtn.addEventListener("click", () => {
+        bgMusic.muted = !bgMusic.muted;
+        toggleMusicBtn.textContent = bgMusic.muted ? "🔇 Muted" : "🔊 Music";
+        console.log("Mute toggled. Muted:", bgMusic.muted);
+      });
+    });
+  </script>
+</body>
+</html>
