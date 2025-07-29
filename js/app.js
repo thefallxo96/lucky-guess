@@ -89,19 +89,23 @@ answerInput.addEventListener("keypress", (e) => {
 const starCanvas = document.getElementById("starfield");
 const starCtx = starCanvas.getContext("2d");
 
+let stars = [];
+
 function resizeStarCanvas() {
   starCanvas.width = window.innerWidth;
   starCanvas.height = window.innerHeight;
-}
-resizeStarCanvas();
-window.addEventListener("resize", resizeStarCanvas);
 
-const stars = Array.from({ length: 100 }, () => ({
-  x: Math.random() * starCanvas.width,
-  y: Math.random() * starCanvas.height,
-  size: Math.random() * 1.5 + 0.5,
-  speed: Math.random() * 0.3 + 0.1
-}));
+  // Re-generate stars to fit new size
+  stars = Array.from({ length: 100 }, () => ({
+    x: Math.random() * starCanvas.width,
+    y: Math.random() * starCanvas.height,
+    size: Math.random() * 1.5 + 0.5,
+    speed: Math.random() * 0.3 + 0.1
+  }));
+}
+
+window.addEventListener("resize", resizeStarCanvas);
+resizeStarCanvas(); // initial setup
 
 function drawStars() {
   starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
@@ -128,4 +132,6 @@ function animateStars() {
   updateStars();
   requestAnimationFrame(animateStars);
 }
+
 animateStars();
+
