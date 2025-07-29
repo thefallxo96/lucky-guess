@@ -2,17 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- ✅ Mobile scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lucky Guess</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet"> <!-- ✅ Ensure Orbitron loads -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 <body>
 
- 
-  <!-- Game UI -->
+  <!-- 🎵 Background Music -->
+  <audio id="bg-music" src="audio/background-music.mp3" loop preload="auto"></audio>
+
+
+
+  <!-- Your alien, ufo, starfield, and game container below... -->
+
+
+
+  <!-- 👽 Alien + UFO -->
   <img id="alien" src="image/alien.png" alt="Alien" />
   <img id="ufo" src="image/ufo.png" alt="UFO" />
+
+
+  <!-- 🧠 Game UI -->
   <div id="game-container">
     <canvas id="starfield"></canvas>
     <div id="name-screen">
@@ -29,6 +40,9 @@
       <p>Round: <span id="round-number">1</span> | Lives: <span id="lives-count">3</span></p>
     </div>
   </div>
+
+  <!-- 🔇 Mute Toggle Button -->
+  <button id="toggle-music">🔊 Music</button>
 
   <script src="js/app.js"></script>
 </body>

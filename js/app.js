@@ -1,5 +1,3 @@
-
-
 const MAX_ROUNDS = 5;
 const TOTAL_QUESTIONS = 6;
 
@@ -8,6 +6,7 @@ let lives = 3;
 let questions = [];
 let playerName = '';
 
+// DOM elements
 const nameScreen = document.getElementById("name-screen");
 const gameContainer = document.getElementById("game-container");
 const quizScreen = document.getElementById("quiz-screen");
@@ -22,6 +21,54 @@ const answerInput = document.getElementById("answer-input");
 const submitBtn = document.getElementById("submit-answer");
 const startBtn = document.getElementById("start-game");
 
+// 🎵 Background music
+const bgMusic = document.getElementById("bg-music");
+const toggleMusicBtn = document.getElementById("toggle-music");
+
+// 🟢 Try autoplay on page load and on first user click (fallback)
+function tryAutoplay() {
+  bgMusic.volume = 0.3;
+  bgMusic.play().then(() => {
+    console.log("Background music autoplayed");
+  }).catch(() => {
+    console.warn("Autoplay was blocked. Music will start on Start click or user interaction.");
+  });
+}
+
+window.addEventListener("click", tryAutoplay, { once: true });
+tryAutoplay(); // Attempt autoplay immediately on page load
+
+// 🔇 Mute/unmute button (only if button exists)
+if (toggleMusicBtn) {
+  toggleMusicBtn.addEventListener("click", () => {
+    bgMusic.muted = !bgMusic.muted;
+    toggleMusicBtn.textContent = bgMusic.muted ? "🔇 Muted" : "🔊 Music";
+  });
+}
+
+// 🚀 Start the game
+function startGame() {
+  const name = nameInput.value.trim();
+  if (name === "") return alert("Please enter your name.");
+
+  playerName = name;
+  localStorage.setItem("playerName", playerName);
+  displayName.textContent = playerName;
+
+  // 🎧 Ensure music plays (fallback if autoplay fails)
+  if (bgMusic.paused) {
+    bgMusic.volume = 0.3;
+    bgMusic.play().catch(err => {
+      console.warn("Music still blocked on start:", err);
+    });
+  }
+
+  questions = getRandomQuestions(TOTAL_QUESTIONS);
+  nameScreen.style.display = "none";
+  quizScreen.style.display = "block";
+  loadQuestion();
+}
+
 function getRandomQuestions(count) {
   const questionBank = [
     { question: "What is the capital of New York?", answer: "Albany" },
@@ -31,22 +78,7 @@ function getRandomQuestions(count) {
     { question: "How many legs does a spider have?", answer: "8" },
     { question: "Who won the 2025 NBA Championships?", answer: "Knicks" }
   ];
-  //toSorted was used to randomize the order of questions
   return questionBank.toSorted(() => 0.5 - Math.random()).slice(0, count);
-}
-
-function startGame() {
-  const name = nameInput.value.trim();
-  if (name === "") return alert("Please enter your name.");
-
-  playerName = name;
-  localStorage.setItem("playerName", playerName);
-  displayName.textContent = playerName;
-
-  questions = getRandomQuestions(TOTAL_QUESTIONS);
-  nameScreen.style.display = "none";
-  quizScreen.style.display = "block";
-  loadQuestion();
 }
 
 function loadQuestion() {
@@ -66,7 +98,7 @@ function checkAnswer() {
     if (round <= MAX_ROUNDS) {
       loadQuestion();
     } else {
-      // 🚀 Launch football bonus
+      // 🎉 Victory: redirect
       window.location.href = "football.html";
     }
   } else {
@@ -95,7 +127,6 @@ function resizeStarCanvas() {
   starCanvas.width = window.innerWidth;
   starCanvas.height = window.innerHeight;
 
-  // Re-generate stars to fit new size
   stars = Array.from({ length: 100 }, () => ({
     x: Math.random() * starCanvas.width,
     y: Math.random() * starCanvas.height,
@@ -105,7 +136,7 @@ function resizeStarCanvas() {
 }
 
 window.addEventListener("resize", resizeStarCanvas);
-resizeStarCanvas(); // initial setup
+resizeStarCanvas();
 
 function drawStars() {
   starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
@@ -134,4 +165,3 @@ function animateStars() {
 }
 
 animateStars();
-
